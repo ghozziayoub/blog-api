@@ -7,29 +7,19 @@ const app = express();
 app.get("/", (req, res) => {
   res.status(200).send("Welcome to blog controller");
 });
-/*
+
 app.post("/add", (req, res) => {
   let data = req.body;
 
-  let hashedPassword = bcrypt.hashSync(data.password, bcrypt.genSaltSync(10));
-
-  let user = new User({
-    firstname: data.firstname,
-    lastname: data.lastname,
-    email: data.email,
-    phone: data.phone,
-    password: hashedPassword,
-    gender: data.gender,
-    birthday: data.birthday,
-    level: data.level,
-    since: data.since,
-    department: data.department,
+  let blog = new Blog({
+    title: data.title,
+    content: data.content,
   });
 
-  user
+  blog
     .save()
     .then(() => {
-      res.status(200).send({ message: "Member added" });
+      res.status(201).send({ message: "Blog added" });
     })
     .catch((e) => {
       res.status(400).send(e);
@@ -37,9 +27,9 @@ app.post("/add", (req, res) => {
 });
 
 app.get("/all", (req, res) => {
-  User.find({ role: "member" })
-    .then((users) => {
-      res.status(200).send(users);
+  Blog.find()
+    .then((blogs) => {
+      res.status(200).send(blogs);
     })
     .catch((e) => {
       res.status(400).send(e);
@@ -49,12 +39,12 @@ app.get("/all", (req, res) => {
 app.get("/one/:id", (req, res) => {
   let id = req.params.id;
 
-  User.findOne({ _id: id })
-    .then((user) => {
-      if (!user) {
-        res.status(404).send({ message: "Member not found" });
+  Blog.findOne({ _id: id })
+    .then((blog) => {
+      if (!blog) {
+        res.status(404).send({ message: "Blog not found" });
       } else {
-        res.status(200).send(user);
+        res.status(200).send(blog);
       }
     })
     .catch((e) => {
@@ -62,16 +52,17 @@ app.get("/one/:id", (req, res) => {
     });
 });
 
+
 app.patch("/update_info/:id", (req, res) => {
   let data = req.body;
   let id = req.params.id;
 
-  User.findOneAndUpdate({ _id: id }, data, { new: true })
-    .then((user) => {
-      if (!user) {
-        res.status(404).send({ message: "Member not found" });
+  Blog.findOneAndUpdate({ _id: id }, data, { new: true })
+    .then((blog) => {
+      if (!blog) {
+        res.status(404).send({ message: "Blog not found" });
       } else {
-        res.status(200).send({ message: "Info updated" });
+        res.status(200).send({ message: "Blog updated" });
       }
     })
     .catch((e) => {
@@ -82,17 +73,17 @@ app.patch("/update_info/:id", (req, res) => {
 app.delete("/delete/:id", (req, res) => {
   let id = req.params.id;
 
-  User.findOneAndDelete({ _id: id })
-    .then((user) => {
-      if (!user) {
-        res.status(404).send({ message: "Member not found" });
+  Blog.findOneAndDelete({ _id: id })
+    .then((blog) => {
+      if (!blog) {
+        res.status(404).send({ message: "Blog not found" });
       } else {
-        res.status(200).send({ message: "Member Deleted" });
+        res.status(200).send({ message: "Blog Deleted" });
       }
     })
     .catch((e) => {
       res.status(400).send(e);
     });
 });
-*/
+
 module.exports = app;
