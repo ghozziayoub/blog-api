@@ -3,16 +3,16 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-//const mongoose = require('./db/config')
+const mongoose = require('./db/config')
 
-//const blogController = require("./controllers/blogController")
+const blogController = require("./controllers/blogController")
 
 const app = express()
 
 app.use(bodyParser.json())
 app.use(cors())
 
-//app.use("/blog", blogController)
+app.use("/blog", blogController)
 
 const PORT = process.env.PORT || 3000
 
