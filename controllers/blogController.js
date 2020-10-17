@@ -18,8 +18,8 @@ app.post("/add", (req, res) => {
 
   blog
     .save()
-    .then(() => {
-      res.status(201).send({ message: "Blog added" });
+    .then((savedBlog) => {
+      res.status(201).send(savedBlog);
     })
     .catch((e) => {
       res.status(400).send(e);
@@ -51,7 +51,6 @@ app.get("/one/:id", (req, res) => {
       res.status(400).send(e);
     });
 });
-
 
 app.patch("/update_info/:id", (req, res) => {
   let data = req.body;
